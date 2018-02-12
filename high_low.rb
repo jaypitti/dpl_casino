@@ -8,28 +8,30 @@
 # X compare with higher or lower input
 # X win or lose
 # X subtract/add from/to wallet
-require_relative 'game'
-require_relative 'player'
-require_relative 'wallet'
+# require_relative 'game'
+# require_relative 'player'
+# require_relative 'wallet'
 
 class Highlow
 
-  def initialize(player)
-    @player = player
-  end
+  # def initialize(player, wallet)
+  #   @player = player
+  #   @wallet = wallet
+  # end
+  @wallet = 1000
 
   def self.number_generate
     @randonum = rand(1...100)
   end
 
   def self.hl_walletbal
-    puts "You have $#{@player.wallet} left."
+    puts "You have $#{@wallet} left." #@player.wallet
   end
 
   def self.hl_win
     puts '-' * 20
     puts "Congrats! You won!"
-    @player.wallet += @betamount
+    @wallet += @betamount
     puts "#{@betamount} was added to your wallet."
     Highlow.hl_walletbal
   end
@@ -37,7 +39,7 @@ class Highlow
   def self.hl_lose
     puts '-' * 20
     puts "Looks like you lost."
-    @player.wallet -= @betamount
+    @wallet -= @betamount
     puts "#{@betamount} was taken from your wallet."
     Highlow.hl_walletbal
   end
@@ -45,12 +47,10 @@ class Highlow
   def self.highlow_high
     if @bet_or_not > @randonum
       Highlow.hl_win
-      Highlow.hl_walletbal
     elsif @bet_or_not == @randonum
       puts "A tie! No winner or loser."
     else
       Highlow.hl_lose
-      Highlow.hl_walletbal
     end
     Highlow.highlow_menu
   end
@@ -58,24 +58,35 @@ class Highlow
   def self.highlow_low
     if @bet_or_not < @randonum
       Highlow.hl_win
-      Highlow.hl_walletbal
     elsif @bet_or_not == @randonum
       puts "A tie! No winner or loser."
     else
       Highlow.hl_lose
-      Highlow.hl_walletbal
     end
     Highlow.highlow_menu
   end
 
   def self.hl_bet
-    puts '=' * 20
-    puts "The range is from 1 to 99."
     puts 'How much would you like to bet?'
     @betamount = gets.to_i
     puts "=" * 20
     Highlow.number_generate
     Highlow.highlow_menu
+  end
+
+  def self.hl_stay
+    puts "Would you like to play again?"
+    puts "1) Yes"
+    puts "2) No"
+    choice = gets.to_i
+    case choice
+      when 1
+        Highlow.hl_bet
+      when 2
+        puts "Thank you, and be sure to *cough*lose*cough* spend your money at the other games!"
+      else
+        "Gesundheit."
+      end
   end
 
   def self.highlow_menu
@@ -91,17 +102,19 @@ class Highlow
       Highlow.number_generate
       puts "The new number is #{@randonum}!"
       Highlow.highlow_high
+      Highlow.hl_stay
     when 2
       Highlow.number_generate
       puts "The new number is #{@randonum}!"
       Highlow.highlow_low
+      Highlow.hl_stay
     when 3
       Highlow.hl_walletbal
       Highlow.highlow_menu
     when 4
-      puts "Okay, enjoy your stay!"
+      puts "Thank you, and be sure to *cough*lose*cough* spend your money at the other games!"
     else
-      puts "Im sorry, what was that?"
+      puts "Gesundheit."
       Highlow.highlow_menu
     end
   end
@@ -113,15 +126,18 @@ class Highlow
     puts "2) Nah I'm good."
     yay_or_nay = gets.to_i
     if yay_or_nay == 1
+      puts '=' * 20
+      puts "The range is from 1 to 99."
       Highlow.hl_bet
     elsif yay_or_nay == 2
-      puts "Okay, enjoy your stay!"
+      puts "Okay, be sure to *cough*lose*cough* spend your money at the other games!"
     else 
-      puts "I'm sorry, I didn't catch that."
+      puts "Gesundheit."
       Highlow.highlow_greeting
     end
   end
 
 end
 
+@highlow = Highlow.new
 Highlow.highlow_greeting
