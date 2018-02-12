@@ -1,3 +1,6 @@
+require_relative 'player'
+require_relative 'Slots1'
+
 @values = Array[
   ["▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓",],
   ["▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓",],
@@ -30,10 +33,12 @@
   ["▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓",]
 ]
 
+player = Player.new
 
 def draw(a,b)
   push_frame = @values.length
   puts "\n" * push_frame.to_i
+  puts @x,@y
   a = a
   b = b
   @values[a][b] = "╬"
@@ -86,6 +91,12 @@ def move()
     else
       @values[@y + 1][@x] = "▓"
     end
+    if @values[@y][@x] === @values[8][11]
+      slots = Slots.new(@player, @player_wallet)
+      while true
+        slots.menu_options(slots.display_menu)
+      end
+    end
     #down
   when "\e[B"
     if @y >= @values.length - 1
@@ -131,44 +142,3 @@ end
 while true
   move
 end
-# oringal case statement from:
-# http://www.alecjacobson.com/weblog/?p=75
-def show_single_kex
-  c = read_char
-
-  case c
-  when " "
-    puts "SPACE"
-  when "\t"
-    puts "TAB"
-  when "\r"
-    puts "RETURN"
-  when "\n"
-    puts "LINE FEED"
-  when "\e"
-    puts "ESCAPE"
-  when "\e[A"
-    puts "UP ARROW"
-  when "\e[B"
-    puts "DOWN ARROW"
-  when "\e[C"
-    puts "RIGHT ARROW"
-  when "\e[D"
-    puts "LEFT ARROW"
-  when "\177"
-    puts "BACKSPACE"
-  when "\004"
-    puts "DELETE"
-  when "\e[3~"
-    puts "ALTERNATE DELETE"
-  when "\u0003"
-    puts "CONTROL-C"
-    exit 0
-  when /^.$/
-    puts "SINGLE CHAR HIT: #{c.inspect}"
-  else
-    puts "SOMETHING ELSE: #{c.inspect}"
-  end
-end
-
-show_single_kex while(true)

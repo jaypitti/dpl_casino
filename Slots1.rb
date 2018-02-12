@@ -1,18 +1,20 @@
 require 'colorize'
 require 'pry'
+require_relative 'player'
+
 class Slots
   attr_reader :player, :casino
 
-  def initialize()
-    @player = @player
-    @casino = @casino
+  def initialize(player, wallet)
+    @player = player
+    @wallet = wallet
     @slot_A = [1,2,3,4,5,6,7,8]
     @slot_B = [1,2,3,4,5]
     @slot_C = [1,2,3,4,5,6,7,8,9,10]
     @a = 0
     @b = 0
     @c = 0
-    @user_bet
+    @user_bet = wallet
     @i = 0
 
     @earnings = 0
@@ -124,9 +126,5 @@ class Slots
   def exit_program
     puts "Goodbye"
     exit
-  end
-  slots = Slots.new
-  while true
-    slots.menu_options(slots.display_menu)
   end
 end
