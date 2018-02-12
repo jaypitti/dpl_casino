@@ -33,4 +33,7 @@ class Player #name and wallet
   def add_to_wallet(amount)
     @player_wallet += amount
   end
+  def set_wallet(value)
+    @player_wallet = value
+  end
 end

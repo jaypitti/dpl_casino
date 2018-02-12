@@ -1,6 +1,14 @@
 require_relative 'player'
 require_relative 'Slots1'
 
+class Game
+
+  attr_accessor :player_wallet
+
+def initialize
+  Game.move
+end
+
 @values = Array[
   ["▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓",],
   ["▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓",],
@@ -33,9 +41,9 @@ require_relative 'Slots1'
   ["▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓","▓",]
 ]
 
-player = Player.new
+@player = Player.new
 
-def draw(a,b)
+def self.draw(a,b)
   push_frame = @values.length
   puts "\n" * push_frame.to_i
   puts @x,@y
@@ -59,7 +67,7 @@ end
 require 'io/console'
 
 # Reads kexpresses from the user including 2 and 3 escape character sequences.
-def read_char
+def self.read_char
   STDIN.echo = false
   STDIN.raw!
 
@@ -76,14 +84,12 @@ ensure
 end
 @y = 10
 @x = 10
-def move()
-  if @x == 8 && @y == 11
+def self.move()
+  if @x.between?(0, 8) && @y.between?(9, 12)
     slots = Slots.new(@player, @player.wallet)
-    while true
       slots.menu_options(slots.display_menu)
-    end
   end
-  c = read_char
+  c = Game.read_char
   puts c
   case c
     #up
@@ -137,8 +143,10 @@ def move()
     exit 0
   end
   system ("cls")
-  draw(@y,@x)
+  Game.draw(@y,@x)
 end
 while true
-  move
+  Game.move
 end
+end
+game = Game.new()
