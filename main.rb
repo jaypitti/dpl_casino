@@ -8,6 +8,7 @@ class Casino
 
   def initialize
     @player = Player.new
+    menu
   end
 
   def menu
