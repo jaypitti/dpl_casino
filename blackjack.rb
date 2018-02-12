@@ -16,11 +16,14 @@ class Blackjack
 
   def play_blackjack
     puts '1) Deal Blackjack'
-    puts '2) Exit to casino'
+    puts '2) Check Wallet'
+    puts '3) Exit to Casino'
     choice = gets.to_i
     if choice == 1
       deal
     elsif choice == 2
+      puts "You have $#{@wallet} in your wallet."
+    elsif choice == 3
       puts "Goodbye"#@casino.menu
     else
       puts "Invalid option"
@@ -112,6 +115,23 @@ class Blackjack
     end
   end
 
+  def value_dealer(card)
+    case card.rank
+      when '2','3','4','5','6','7','8','9','10'
+        @value = card.rank.to_i
+      when 'A'
+        if dealer_value <= 10
+          choice = 11
+        else 
+          choice = 1
+        end
+          @value = choice
+      when 'J', 'Q', 'K'
+        @value = 10
+      else
+    end
+  end
+
   def total(player_value)
     puts "Your cards are:"
     @hand.each do |card|
@@ -122,7 +142,7 @@ class Blackjack
     @dealer_hand << @cards.pop
     @dealer_value = 0
     @dealer_hand.each do |card|
-      value(card)
+      value_dealer(card)
       @dealer_value += @value
     end
 
@@ -143,13 +163,21 @@ class Blackjack
 
     elsif @dealer_value > 21 && @player_value > 21
       puts "It's a tie"
+      @wallet += @user_bet
+      @player.set_wallet(@wallet)
 
     elsif @player_value == 21
       puts "Jackpot"
+      @wallet += @user_bet * 10
+      @player.set_wallet(@wallet)
+
     elsif @dealer_value == 21
       puts "Dealer wins"
     else
       puts "Player wins"
+      @wallet += @user_bet * 3
+      @player.set_wallet(@wallet)
+
     end
     @hand.clear
     @dealer_hand.clear
