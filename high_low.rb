@@ -1,25 +1,24 @@
 # X show menu
 #   X exit option
 # X ask for bet amount
-# - show a number from 1 to 100
-# - ask high or low
-# - get input
-# - randomize from 1 - 100
-# - compare with higher or lower input
-# - win or lose
+# X show a number from 1 to 100
+# X ask high or low
+# X get input
+# X randomize from 1 - 100
+# X compare with higher or lower input
+# X win or lose
 # - subtract/add from/to wallet
 
 require_relative 'player'
 
 class Highlow
 
+  def initialize
+    @player = Player.new
+  end
 
   def number_generate
     @randonum = rand(1...100)
-  end
-
-  def hlwallet_total
-    puts "You have $####### left."
   end
 
   def highlow_high
@@ -28,7 +27,7 @@ class Highlow
       puts "Congrats! You won!"
 #     ####### += @betamount
       puts "#{@betamount} was added to your wallet."
-      @highlow.hlwallet_total
+      @player.wallet
     elsif @bet_or_not == @randonum
       puts "A tie! No winner or loser."
     else
@@ -36,7 +35,26 @@ class Highlow
       puts "Looks like you lost."
 #     ####### -= @betamount
       puts "#{@betamount} was taken from your wallet."
-      @highlow.hlwallet_total
+      @player.wallet
+    end
+    @highlow.highlow_menu
+  end
+
+  def highlow_low
+    if @bet_or_not < @randonum
+      puts '-' * 20
+      puts "Congrats! You won!"
+#     ####### += @betamount
+      puts "#{@betamount} was added to your wallet."
+      @player.wallet
+    elsif @bet_or_not == @randonum
+      puts "A tie! No winner or loser."
+    else
+      puts '-' * 20
+      puts "Looks like you lost."
+#     ####### -= @betamount
+      puts "#{@betamount} was taken from your wallet."
+      @player.wallet
     end
     @highlow.highlow_menu
   end
@@ -63,7 +81,7 @@ class Highlow
     when 2
       @highlow.highlow_low
     when 3
-      @highlow.hlwallet_total
+      @player.wallet
     when 4
       puts "Okay, enjoy your stay!"
     else
