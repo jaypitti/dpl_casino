@@ -14,7 +14,7 @@ require_relative 'player'
 class Highlow
 
   def initialize
-    @player = Player.new
+    highlow_greeting
   end
 
   def number_generate
@@ -116,5 +116,6 @@ class Highlow
 
 end
 
-@highlow = Highlow.new
+@player = Player.new
+@highlow = Highlow.new(@player)
 @highlow.highlow_greeting
