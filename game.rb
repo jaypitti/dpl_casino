@@ -1,5 +1,6 @@
 require_relative 'player'
 require_relative 'Slots1'
+require_relative 'blackjack'
 
 class Game
 
@@ -88,6 +89,9 @@ def self.move()
   if @x.between?(0, 8) && @y.between?(9, 12)
     slots = Slots.new(@player, @player.wallet)
       slots.menu_options(slots.display_menu)
+  end
+  if @x.between?(0, 15) && @y.between?(22, 27)
+    blackjack = Blackjack.new(@player, @player.wallet)
   end
   c = Game.read_char
   puts c

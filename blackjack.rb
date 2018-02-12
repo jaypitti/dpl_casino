@@ -6,9 +6,9 @@ class Blackjack
 
   attr_reader :player, :casino
 
-  def initialize(player, casino)
+  def initialize(player, wallet)
+    @wallet = wallet
     @player = player
-    @casino = casino
     play_blackjack
   end
 
@@ -49,14 +49,14 @@ class Blackjack
         #this could be another method outside of the value meth.
         if choice == 1 || choice == 11
           @value = choice
-        else 
+        else
           puts "No cheating, you have been sent back to the main casino floor"
           @casino.menu
           #where should this put the player back to?
         end
       when 'J', 'Q', 'K'
         @value = 10
-      else 
+      else
     end
   end
 
@@ -68,6 +68,6 @@ class Blackjack
   def new_cards
     puts "Would you like another card?"
     puts "> "
-    
+
   end
 end

@@ -54,7 +54,6 @@ class Slots
       when 3
         exit_program
         @player.retrieve_earnings(@earnings)
-        option = false
       else
         puts "Invalid Selection"
       end
