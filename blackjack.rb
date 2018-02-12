@@ -26,7 +26,12 @@ class Blackjack
   end
 
   def deal
-    puts "deal"
+    @deck = Deck.new
+    cards = @deck.shuffle_cards
+    card1 = cards.pop
+    card2 = cards.pop
+    puts "Your cards are: #{card1.rank} of #{card1.suit}  & #{card2.rank} of #{card2.suit}"
+    
   end
 
 end
