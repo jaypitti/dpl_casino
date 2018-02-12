@@ -8,7 +8,7 @@ class Blackjack
 
   def initialize(player, wallet)
     @player = player
-    @casino = casino
+    @wallet = wallet
     @hand = []
     @dealer_hand = []
     play_blackjack
@@ -28,6 +28,11 @@ class Blackjack
   end
 
   def deal
+    puts "How much do you want to bet"
+    print "> "
+    @user_bet = gets.strip.to_i
+    @wallet = @player.player_bet(@wallet, @user_bet) 
+
     @deck = Deck.new
     @cards = @deck.shuffle_cards
     @hand << @cards.pop
