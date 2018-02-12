@@ -12,8 +12,11 @@ class Player #name and wallet
     player_name = gets.strip
     puts "Welcome #{player_name}! How much money do you have?"
     puts "$:"
-    @player_wallet = gets.strip.to_f
+    @player_wallet = gets.strip.to_i
+    @player_wallet = @player_wallet.scan(/[\d]/)
+    @player_wallet = player_wallet[0].to_i
     puts "Excellent. Lets find out if you can increase your $#{@player_wallet}!!"
+
   end
 
   def wallet
