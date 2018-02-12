@@ -77,6 +77,12 @@ end
 @y = 10
 @x = 10
 def move()
+  if @x == 8 && @y == 11
+    slots = Slots.new(@player, @player.wallet)
+    while true
+      slots.menu_options(slots.display_menu)
+    end
+  end
   c = read_char
   puts c
   case c
@@ -90,12 +96,6 @@ def move()
       @values[@y + 1][@x] = "░"
     else
       @values[@y + 1][@x] = "▓"
-    end
-    if @values[@y][@x] === @values[8][11]
-      slots = Slots.new(@player, @player_wallet)
-      while true
-        slots.menu_options(slots.display_menu)
-      end
     end
     #down
   when "\e[B"
