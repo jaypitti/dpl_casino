@@ -8,9 +8,8 @@ class Odds_evens
   attr_reader :player
 
     def initialize (player)
-    @player_name = player
-    @player_wallet = wallet
-    play_odds_evens
+      @player = player
+      guess
     end
 
     def guess
@@ -28,26 +27,26 @@ class Odds_evens
           bet
         elsif @player_guess == 3
         else
-          puts "Input error. Try again".colorize(:red)
+          puts "Input error. Try again".red
           guess
         end
     end
 
     def bet
       puts "Before you roll, how much money would you like to gamble? (you currently have $#{@player.wallet} in your wallet)"
-      player_gamble = gets.strip.to_i
-        if player_gamble > @player.wallet
-          puts "Too bad, you don't have enough money in your wallet to gamble that much! Enter an ammount smaller than $#{@player.wallet}.".colorize(:red)
+      @player_gamble = gets.strip.to_i
+        if @player_gamble > @player.wallet
+          puts "Too bad, you don't have enough money in your wallet to gamble that much! Enter an ammount smaller than $#{@player.wallet}.".red
           bet
-        elsif user_gamble <= @player.wallet
-          puts "Sounds great! You have gambled $#{user_gamble}. Let's roll the dice."
+        elsif @player_gamble <= @player.wallet
+          puts "Sounds great! You have gambled $#{@player_gamble}. Let's roll the dice."
           roll
         end
     end
 
     def roll
-      dice1 = rand(1..6).colorize(:blue)
-      dice2 = rand(1..6).colorize(:blue)
+      dice1 = rand(1..6)
+      dice2 = rand(1..6)
       dice_sum = dice1 + dice2
       puts "#{dice1} + #{dice2} = #{dice_sum}"
       if dice_sum % 2 == 0
@@ -64,9 +63,10 @@ class Odds_evens
     def outcome
       if @evenorodd == @player_guess
         puts "You guessed correct!"
-
+        @player.wallet += @player_gamble
       else
         puts "Loser"
+        @player.wallet -= @player_gamble
       end
     end
 
