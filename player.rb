@@ -28,3 +28,5 @@ class Player #name and wallet
     @player_wallet += value
   end
 end
+
+player = Player.new

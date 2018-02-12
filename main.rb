@@ -1,5 +1,6 @@
 require_relative 'player'
 require_relative 'slots'
+require_relative 'blackjack'
 #require_relative 'high_low'
 
 class Casino
@@ -22,11 +23,12 @@ class Casino
   def enter_game(choice)
     case choice
       when 1
-        Slot.new(@player, self)
+        Slots.new(@player, self)
       when 2
         puts "High Low under construction"
       when 3
         puts "Black Jack under construction"
+        Blackjack.new(@player, self)
       when 4
         puts "Goodbye"
         exit
