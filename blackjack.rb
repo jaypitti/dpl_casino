@@ -7,19 +7,21 @@ class Blackjack
   attr_reader :player, :casino
 
   def initialize(player, wallet)
-    @wallet = wallet
     @player = player
+    @casino = casino
+    @hand = []
+    @dealer_hand = []
     play_blackjack
   end
 
   def play_blackjack
-    puts '1) Deal'
+    puts '1) Deal Blackjack'
     puts '2) Exit to casino'
     choice = gets.to_i
     if choice == 1
       deal
     elsif choice == 2
-      @casino.menu
+      puts "Goodbye"#@casino.menu
     else
       puts "Invalid option"
     end
@@ -27,14 +29,59 @@ class Blackjack
 
   def deal
     @deck = Deck.new
-    cards = @deck.shuffle_cards
-    card1 = cards.pop
-    card2 = cards.pop
-    puts "Your cards are: #{card1.rank} of #{card1.suit}  & #{card2.rank} of #{card2.suit}"
-    card1_value = value(card1)
-    card2_value = value(card2)
+    @cards = @deck.shuffle_cards
+    @hand << @cards.pop
+    @dealer_hand << @cards.pop
+    @hand << @cards.pop
+    puts "Your cards are:"
+    @hand.each do |card|
+      puts "> #{card.rank} of #{card.suit}"
+    end
+    puts "Dealers shown card is:"
+    @dealer_hand.each do |card|
+      puts "> #{card.rank} of #{card.suit}"
+    end
+    more_cards
+  end
 
-    total(card1_value, card2_value)
+  def more_cards
+    puts "Would you like another card?"
+    puts "1) Yes, hit me"
+    puts "2) No, stand"
+    print "> "
+    choice = gets.strip.to_i
+    case choice
+      when 1
+        hit
+      when 2
+        calc(@hand)
+      else
+        puts "Invalid choice"
+        more_cards
+      end
+  end
+
+  def hit
+    puts "Hit"
+    @hand << @cards.pop
+    puts "Your cards are:"
+    @hand.each do |card|
+      puts "> #{card.rank} of #{card.suit}"
+    end
+    puts "Dealers shown card is:"
+    @dealer_hand.each do |card|
+      puts "> #{card.rank} of #{card.suit}"
+    end
+    more_cards
+  end
+
+  def calc(hand)
+    @player_value = 0
+    @hand.each do |card|
+      value(card)
+      @player_value += @value
+    end
+    total(@player_value)
   end
 
   def value(card)
@@ -47,11 +94,11 @@ class Blackjack
         print "> "
         choice = gets.strip.to_i
         #this could be another method outside of the value meth.
-        if choice == 1 || choice == 11
+        if (choice == 1) || (choice == 11)
           @value = choice
         else
           puts "No cheating, you have been sent back to the main casino floor"
-          @casino.menu
+          #@casino.menu
           #where should this put the player back to?
         end
       when 'J', 'Q', 'K'
@@ -60,14 +107,50 @@ class Blackjack
     end
   end
 
-  def total(card1_value, card2_value)
-    puts "Your current card total is: #{card1_value + card2_value}"
-    more_cards
+  def total(player_value)
+    puts "Your cards are:"
+    @hand.each do |card|
+      puts "> #{card.rank} of #{card.suit}"
+    end
+    puts "Your current card total is: #{@player_value}"
+    puts "- " * 15
+    @dealer_hand << @cards.pop
+    @dealer_value = 0
+    @dealer_hand.each do |card|
+      value(card)
+      @dealer_value += @value
+    end
+
+    puts "The dealers cards are:"
+    @dealer_hand.each do |card|
+      puts "> #{card.rank} of #{card.suit}"
+    end
+    puts "Dealers current card total is: #{@dealer_value}"
+    win_loose
   end
 
-  def new_cards
-    puts "Would you like another card?"
-    puts "> "
+  def win_loose
+    if @player_value > 21
+      puts "Sorry you loose"
 
+    elsif @dealer_value >= @player_value && @dealer_value < 21
+      puts "Sorry you loose"
+
+    elsif @dealer_value > 21 && @player_value > 21
+      puts "It's a tie"
+
+    elsif @player_value == 21
+      puts "Jackpot"
+    elsif @dealer_value == 21
+      puts "Dealer wins"
+    else
+      puts "Player wins"
+    end
+    @hand.clear
+    @dealer_hand.clear
+    play_blackjack
   end
+
 end
+
+#test for empty deck, or start new one.
