@@ -17,6 +17,7 @@ class Player #name and wallet
     amount = gets.strip.to_i
     wallet = Wallet.new(amount)
     puts "Excellent. Lets find out if you can increase your $#{@player_wallet}!!"
+
   end
 end
 
