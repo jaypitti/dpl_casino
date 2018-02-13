@@ -9,7 +9,6 @@ class Odds_evens
 
     def initialize (player)
       @player = player
-      guess
     end
 
     def guess
@@ -71,6 +70,3 @@ class Odds_evens
     end
 
 end
-
-player = Player.new
-Odds_evens.new(player)

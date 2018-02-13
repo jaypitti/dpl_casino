@@ -15,25 +15,7 @@ class Player #name and wallet
     puts "$:"
     amount = gets.strip.to_i
     @wallet = Wallet.new(amount)
-    @player_wallet = @wallet.amount
-    puts @wallet.amount
-    puts "Excellent. Lets find out if you can increase your $#{@player_wallet}!!"
+    puts @wallet.wallet
+    puts "Excellent. Lets find out if you can increase your $#{@wallet.wallet}!!"
   end
-  def wallet
-    return @player_wallet
-  end
-  def player_bet(wallet, bet)
-    @player_wallet = wallet -= bet
-    return @player_wallet
-  end
-  def retrieve_earnings(total)
-    @player_wallet = total
-  end
-  def add_to_wallet(amount)
-    @player_wallet += amount
-  end
-  def set_wallet(value)
-    @player_wallet = value
-  end
-
 end
