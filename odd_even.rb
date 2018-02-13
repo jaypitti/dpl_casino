@@ -62,10 +62,14 @@ class Odds_evens
     def outcome
       if @evenorodd == @player_guess
         puts "You guessed correct!"
-        @player.wallet += @player_gamble
+        @wallet += @player_gamble
+        puts "You now have $#{@wallet} in your wallet"
+        Odds_evens.new(player)
       else
         puts "Loser"
-        @player.wallet -= @player_gamble
+        @wallet -= @player_gamble
+        puts "You now have $#{@wallet} in your wallet"
+        Odds_evens.new(player)
       end
     end
 
