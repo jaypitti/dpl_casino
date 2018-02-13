@@ -20,8 +20,12 @@ class Highlow
   # end
   @wallet = 1000
 
-  def self.number_generate
-    @randonum = rand(1...100)
+  def self.number_generate1
+    @randonum1 = rand(1...100)
+  end
+
+  def self.number_generate2
+    @randonum2 = rand(1...100)
   end
 
   def self.hl_walletbal
@@ -44,36 +48,6 @@ class Highlow
     Highlow.hl_walletbal
   end
 
-  def self.highlow_high
-    if @bet_or_not > @randonum
-      Highlow.hl_win
-    elsif @bet_or_not == @randonum
-      puts "A tie! No winner or loser."
-    else
-      Highlow.hl_lose
-    end
-    Highlow.highlow_menu
-  end
-
-  def self.highlow_low
-    if @bet_or_not < @randonum
-      Highlow.hl_win
-    elsif @bet_or_not == @randonum
-      puts "A tie! No winner or loser."
-    else
-      Highlow.hl_lose
-    end
-    Highlow.highlow_menu
-  end
-
-  def self.hl_bet
-    puts 'How much would you like to bet?'
-    @betamount = gets.to_i
-    puts "=" * 20
-    Highlow.number_generate
-    Highlow.highlow_menu
-  end
-
   def self.hl_stay
     puts "Would you like to play again?"
     puts "1) Yes"
@@ -89,23 +63,54 @@ class Highlow
       end
   end
 
+  def self.highlow_high
+    if @randonum1 < @randonum2
+      Highlow.hl_win
+    elsif @randonum1 == @randonum2
+      puts "A tie! No winner or loser."
+    else
+      Highlow.hl_lose
+    end
+  end
+
+  def self.highlow_low
+    if @randonum1 > @randonum2
+      Highlow.hl_win
+    elsif @randonum1 == @randonum2
+      puts "A tie! No winner or loser."
+    else
+      Highlow.hl_lose
+    end
+  end
+
+  def self.hl_bet
+    puts 'How much would you like to bet?'
+    @betamount = gets.to_i
+    puts "=" * 20
+    Highlow.number_generate1
+    Highlow.highlow_menu
+  end
+
+
+
   def self.highlow_menu
-    puts "The number is #{@randonum}! Will the next number be higher or lower?"
+    puts "The number is #{@randonum1}! Will the next number be higher or lower?"
     puts '=' * 20
     puts "1) Higher"
     puts "2) Lower"
     puts "3) Wallet Balance"
     puts "4) Leave"
     @bet_or_not = gets.to_i
+    puts '-' * 20
     case @bet_or_not
     when 1
-      Highlow.number_generate
-      puts "The new number is #{@randonum}!"
+      Highlow.number_generate2
+      puts "The new number is #{@randonum2}!"
       Highlow.highlow_high
       Highlow.hl_stay
     when 2
-      Highlow.number_generate
-      puts "The new number is #{@randonum}!"
+      Highlow.number_generate2
+      puts "The new number is #{@randonum2}!"
       Highlow.highlow_low
       Highlow.hl_stay
     when 3
