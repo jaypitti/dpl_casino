@@ -10,14 +10,13 @@ class Player #name and wallet
     puts "===DPL CASINO==="
     puts "================="
     puts "What is your name?"
-    player_name = gets.strip
-    puts "Welcome #{player_name}! How much money do you have?"
+    @player_name = gets.strip
+    puts "Welcome #{@player_name}! How much money do you have?"
     puts "$:"
     amount = gets.strip.to_i
     @wallet = Wallet.new(amount)
     @player_wallet = @wallet.amount
     puts @wallet.amount
-    binding.pry
     puts "Excellent. Lets find out if you can increase your $#{@player_wallet}!!"
   end
   def wallet
@@ -36,5 +35,5 @@ class Player #name and wallet
   def set_wallet(value)
     @player_wallet = value
   end
-  
+
 end
